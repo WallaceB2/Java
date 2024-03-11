@@ -1,0 +1,23 @@
+import java.util.Random;
+
+public class MensagemJogador {
+
+    
+    private static final String[] NOMES = {"Cássio Ramos", "Neymar Jr", "Roberto Firmino", "Philippe Coutinho", "Gabriel Jesus"};
+    private static final String[] POSICOES = {"goleiro", "atacante", "meio-campista", "zagueiro", "lateral"};
+    private static final String[] CLUBES = {"Corinthians", "Paris Saint-Germain", "Liverpool", "Barcelona", "Manchester City"};
+
+    public static void main(String[] args) {
+        
+        Random random = new Random();
+
+        
+        String nome = NOMES[random.nextInt(NOMES.length)];
+        int idade = random.nextInt(24) + 17; // Gera idade entre 17 e 40
+        String posicao = POSICOES[random.nextInt(POSICOES.length)];
+        String clube = CLUBES[random.nextInt(CLUBES.length)];
+
+        
+        System.out.println(nome + " é um futebolista brasileiro de " + idade + " anos que atua como " + posicao + ". Atualmente defende o " + clube + ".");
+    }
+}
