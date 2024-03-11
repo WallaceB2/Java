@@ -1,3 +1,1 @@
-# Java
-
-# Estou estudando Java
+Bem-vindo ao GitHub
