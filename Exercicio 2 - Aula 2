@@ -1,14 +1,27 @@
+package exercicio2;
+
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JogadorGerador {
+public class JavaExercicioJogador {
+
     private static boolean requisicaoFeita = false;
-    private static List<Jogador> jogadores = new ArrayList<>();
+    private static final List<Jogador> jogadores = new ArrayList<>();
+    private static final String[] POSICOES = {"goleiro", "atacante", "meio-campista", "zagueiro", "lateral"};
+    private static final String[] CLUBES = {"Corinthians", "Paris Saint-Germain", "Liverpool", "Barcelona", "Manchester City"};
+
+    public static void main(String[] args) {
+        realizarRequisicao();
+        
+        List<Jogador> jogadoresGerados = getJogadores();
+        for (Jogador jogador : jogadoresGerados) {
+            System.out.println(jogador.getDescricao());
+        }
+    }
 
     public static void realizarRequisicao() {
         if (!requisicaoFeita) {
-            
             Random random = new Random();
             for (int i = 0; i < 5; i++) { 
                 String nome = "Jogador" + i;
@@ -28,12 +41,15 @@ public class JogadorGerador {
     }
 }
 
-class Jogador {
-    private String nome;
-    private String sobrenome;
-    private int idade;
-    private String posicao;
-    private String clube;
+---------------------------------------------------------------------------------------------------------------------------------------
+package exercicio2;
+
+public class Jogador {
+    String nome;
+    String sobrenome;
+    int idade;
+    String posicao;
+    String clube;
 
     public Jogador(String nome, String sobrenome, int idade, String posicao, String clube) {
         this.nome = nome;
