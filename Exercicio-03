@@ -1,0 +1,179 @@
+Ator.java
+package SpringBot;
+
+public abstract class Ator implements Indicavel {
+    private boolean elegivel;
+    private int numeroDeIndicacoes;
+
+    public Ator() {
+        this.elegivel = true;
+        this.numeroDeIndicacoes = 0;
+    }
+
+    @Override
+    public boolean isElegivel() {
+        return false;
+    }
+
+    @Override
+    public void setElegivel(boolean elegivel) {
+
+    }
+
+    @Override
+    public int getNumeroDeIndicacoes() {
+        return 0;
+    }
+
+    @Override
+    public void incrementarNumeroDeIndicacoes() {
+
+    }
+
+}
+
+--------------------------------------------------------------------
+Filme.java
+package SpringBot;
+
+public abstract class Filme implements Indicavel {
+    private boolean elegivel;
+    private int numeroDeIndicacoes;
+
+    public Filme() {
+        this.elegivel = true;
+        this.numeroDeIndicacoes = 0;
+    }
+
+    @Override
+    public boolean isElegivel() {
+        return elegivel;
+    }
+
+    @Override
+    public void setElegivel(boolean elegivel) {
+        this.elegivel = elegivel;
+    }
+
+    @Override
+    public int getNumeroDeIndicacoes() {
+        return numeroDeIndicacoes;
+    }
+
+    @Override
+    public void incrementarNumeroDeIndicacoes() {
+        this.numeroDeIndicacoes++;
+    }
+}
+
+---------------------------------------------------------------------------------------------
+Indicacao.java
+package SpringBot;
+
+public class Indicacao implements Indicavel {
+    private boolean elegivel;
+    private int numeroDeIndicacoes;
+
+    public Indicacao(boolean elegivel) {
+        this.elegivel = elegivel;
+        this.numeroDeIndicacoes = 0;
+    }
+
+    @Override
+    public boolean isElegivel() {
+        return elegivel;
+    }
+
+    @Override
+    public void setElegivel(boolean elegivel) {
+        this.elegivel = elegivel;
+    }
+
+    @Override
+    public int getNumeroDeIndicacoes() {
+        return numeroDeIndicacoes;
+    }
+
+    @Override
+    public void incrementarNumeroDeIndicacoes() {
+
+    }
+
+    @Override
+    public void incrementarIndicacoes() {
+        this.numeroDeIndicacoes++;
+    }
+}
+
+-----------------------------------------------------------------------------------------------
+Indicavel.java
+package SpringBot;
+
+public interface Indicavel {
+    boolean isElegivel();
+    void setElegivel(boolean elegivel);
+    int getNumeroDeIndicacoes();
+    void incrementarNumeroDeIndicacoes();
+
+    void incrementarIndicacoes();
+}
+
+-----------------------------------------------------------------------------------------------
+OscarService.java
+package SpringBot;
+
+import org.jetbrains.annotations.NotNull;
+import org.springframework.stereotype.Service;
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class OscarService {
+    private final List<Indicavel> indicados;
+
+    public OscarService() {
+        this.indicados = new ArrayList<>();
+    }
+
+    public void adicionarIndicacao(@NotNull Indicavel indicavel) {
+        if (indicavel.isElegivel()) {
+            indicavel.incrementarIndicacoes();
+            indicados.add(indicavel);
+        } else {
+            System.out.println("A indicação não foi adicionada porque o indicável não é elegível.");
+        }
+    }
+
+    public List<Indicavel> getIndicados() {
+        return indicados;
+    }
+}
+
+--------------------------------------------------------------------------------------------------
+
+TestarCodigo.java
+package SpringBot;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@RestController
+public class TestarCodigo {
+    @Autowired
+    private OscarService oscarService;
+
+    @PostMapping("/indicar")
+    public void indicar(@RequestBody Indicacao indicacao) {
+        oscarService.adicionarIndicacao(indicacao);
+    }
+
+    @GetMapping("/indicados")
+    public List<Indicavel> getIndicados() {
+        return oscarService.getIndicados();
+    }
+}
